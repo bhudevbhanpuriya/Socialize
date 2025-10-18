@@ -1,0 +1,113 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container py-5">
+    <h2>Your Activity</h2>
+
+    <h4 class="mt-4">Telegram Posts</h4>
+    <table class="table table-dark  table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Bot ID</th>
+                <th scope="col">Content</th>
+                <th scope="col">Scheduled Time</th>
+                <th scope="col">Action</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in telegram_posts %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ post.BOT_id }}</td>
+                    <td>{{ post.content|truncatechars:50 }}</td>
+                    <td>{{ post.scheduled_time }}</td>
+                    <td>
+                        {% if post.status == "Pending" %}
+                            <a href="{% url 'telegram_edit' post.id %}" class="btn text-secondary"><i class="bi bi-pencil-fill"></i></a>
+                            <a href="{% url 'telegram_delete' post.id %}" class="btn text-secondary"><i class="bi bi-trash3-fill"></i></a>
+                        {% else %}
+                            <a href="{% url 'telegram_view' post.id %}" class="btn text-secondary "><i class="bi bi-eye-fill"></i></a>
+                        {% endif %}
+                    </td>
+                    
+
+                    <td>{% if post.status == "Pending" %}
+                        <div><button class="btn btn-warning">{{ post.status }}</button></div>
+                        {% elif post.status == "Completed" %}
+                        <div><button class="btn btn-success">{{ post.status }}</button></div>
+                        {% else %}
+                        <div><button class="btn btn-danger">{{ post.status }}</button></div>
+
+                        {% endif %}
+                        </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center text-muted">No Telegram posts found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+
+
+
+    
+    <h4 class="mt-4">Reddit Posts</h4>
+    <table class="table table-dark  table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Username</th>
+                <th scope="col">Subreddit</th>
+                <th scope="col">Scheduled Time</th>
+                <th scope="col">Title</th>
+                <th scope="col">Action</th>
+
+
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in reddit_posts %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ reddit_username.username }}</td>
+                    <td>{{ post.subreddit_name|truncatechars:50 }}</td>
+                    <td>{{ post.scheduled_time }}</td>
+                    <td>{{ post.title }}</td>
+                    <td>
+                        {% if post.status == "Pending" %}
+                            <a href="{% url 'reddit_edit' post.id %}" class="btn text-secondary"><i class="bi bi-pencil-fill"></i></a>
+                            <a href="{% url 'reddit_delete' post.id %}" class="btn text-secondary"><i class="bi bi-trash3-fill"></i></a>
+                        {% else %}
+                            <a href="{% url 'reddit_view' post.id %}" class="btn text-secondary "><i class="bi bi-eye-fill"></i></a>
+                        {% endif %}
+                    </td>
+                    <td>{% if post.status == "Pending" %}
+                        <div><button class="btn btn-warning">{{ post.status }}</button></div>
+                        {% elif post.status == "Completed" %}
+                        <div><button class="btn btn-success">{{ post.status }}</button></div>
+                        {% else %}
+                        <div><button class="btn btn-danger">{{ post.status }}</button></div>
+
+                        {% endif %}
+                        </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center text-muted">No Reddit posts found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h4 class="mt-4">Instagram Posts</h4>
+    {% for post in instagram_posts %}
+        <div class="border-bottom pb-2">{{ post.caption|truncatechars:100 }} – {{ post.created_at }}</div>
+    {% empty %}
+        <p>No Instagram posts found.</p>
+    {% endfor %}
+</div>
+{% endblock %}

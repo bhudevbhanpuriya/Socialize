@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Telegram Post Details</h4>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">BOT ID</dt>
+                <dd class="col-sm-9">{{ tele.BOT_id }}</dd>
+
+                <dt class="col-sm-3">Chat ID</dt>
+                <dd class="col-sm-9">{{ tele.chat_id }}</dd>
+
+                <dt class="col-sm-3">Content</dt>
+                <dd class="col-sm-9">{{ tele.content }}</dd>
+
+                <dt class="col-sm-3">Scheduled Time</dt>
+                <dd class="col-sm-9">{{ tele.scheduled_time }}</dd>
+
+                <dt class="col-sm-3">Status</dt>
+                <dd class="col-sm-9">
+                    <span class="badge 
+                        {% if tele.status == 'Pending' %}
+                            bg-warning text-dark
+                        {% elif tele.status == 'Completed' %}
+                            bg-success
+                        {% elif tele.status == 'Error' %}
+                            bg-danger
+                        {% else %}
+                            bg-secondary
+                        {% endif %}
+                    ">
+                        {{ tele.status }}
+                    </span>
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,106 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Home{% endblock %}</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+  <!-- AOS Animation CSS -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+</head>
+
+<body class="bg-black text-white">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Socialize</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+          <!-- Home Link -->
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url 'user' %}">Activity</a>
+          </li>
+
+          <!-- Platforms Dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Platforms
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item d-flex justify-content-between align-items-center" href="{% url 'tel_form' %}">
+                <span>Telegram</span>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telegram_logo.svg/512px-Telegram_logo.svg.png?20220101141644" width="20" alt="Telegram" class="img-fluid"> </a> </li>
+
+              <li>  <a class="dropdown-item d-flex justify-content-between align-items-center" href="{% url 'red_form' %}">
+                <span>Reddit</span>
+                <img src="https://www.svgrepo.com/show/271111/reddit.svg" width="20" alt="Reddit" class="img-fluid">
+              </a></li>
+
+              <li><a class="dropdown-item" href="#">Instagram</a></li>
+            </ul>
+          </li>
+
+          {% if user.is_authenticated %}
+          <!-- Account Dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Account
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li>
+                <button class="dropdown-item text-danger" onclick="document.getElementById('logout-form').submit()">Logout</button>
+              </li>
+            </ul>
+          </li>
+          {% endif %}
+        </ul>
+
+        <!-- Search Bar -->
+        <form class="d-flex me-3" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+          <button class="btn btn-outline-light" type="submit">Search</button>
+        </form>
+
+        <!-- Auth Buttons -->
+        {% if user.is_authenticated %}
+        <form id="logout-form" method="post" action="{% url 'account_logout' %}" style="display: none;">
+          {% csrf_token %}
+        </form>
+        {% else %}
+          <a href="{% url 'account_login' %}" class="btn btn-outline-light mx-2">Login</a>
+          <a href="{% url 'register' %}" class="btn btn-primary">Register</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container py-5">
+    {% block content %}
+    <div class="text-center" data-aos="fade-up">
+      <h1 class="display-4">Welcome to Socialize 🎯</h1>
+      <p class="lead mt-3">Manage all your social media platforms from a single dashboard.</p>
+    </div>
+    {% endblock %}
+  </div>
+
+  <!-- Scripts at end for better performance -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ once: true });
+  </script>
+</body>
+</html>

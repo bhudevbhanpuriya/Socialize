@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+{% load widget_tweaks %}
+
+{% block title %}Reddit{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-5">
+    <div class="row">
+
+        <!-- Left column with form -->
+        <div class="col-md-6 col-lg-6 px-5">
+            <a href="{% url 'reddit_auth_start' %}" class="btn mb-4 mt-3 mx-3 gap-5 px-2 bg-dark text-white" >
+                <img src="https://www.svgrepo.com/show/271111/reddit.svg" alt="Reddit" style="height: 20px;">
+                    Connect Reddit Account
+                
+               
+            </a>
+            <p>
+                {% if reddit_user.username != "default_user" %}
+                Connected to : {{reddit_user.username}}
+                {% else %}
+                Not Connected
+                
+                {% endif %}
+               
+            </p>
+                
+            <div class="card bg-dark text-white shadow-lg rounded-4 border-0">
+
+                <!-- Updated connect button -->
+
+
+                <div class="card-header  text-white rounded-top-4 text-center" style="background-color: #ff5733; color: white;">
+                    <h3 class="mb-0">
+                        {% if form.instance.pk %} Edit Reddit Post {% else %} Create Reddit Post {% endif %}
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="mb-3">
+                                <label for="{{ field.id_for_label }}" class="form-label fw-semibold">{{ field.label }}</label>
+                                {{ field|add_class:"form-control bg-dark text-white border-secondary form-control-sm" }}
+                                {% if field.errors %}
+                                    <div class="text-danger small">{{ field.errors }}</div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        <div class="d-grid gap-2">
+                            <button type="submit" name="action" value="schedule" class="btn  btn-lg"
+                            style="background-color: #ff5733; color: white;" >Schedule</button>
+                            <button type="submit" name="action" value="preview" class="btn btn-outline-light btn-lg">Preview</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right column remains blank -->
+        <div class="col-md-6 col-lg-6">
+            <div class="card shadow rounded-4 mt-5 mx-4  text-white" style="min-height: 300px;background-color:rgb(17, 17, 17);">
+                <div class="card-body">
+        
+                    <!-- Header -->
+                    <div class="d-flex align-items-center mb-2">
+                        <img src="https://www.svgrepo.com/show/271111/reddit.svg" alt="Reddit" height="24" class="me-2">
+                        <div>
+                            <small class="text-white d-block">r/{{ form.subreddit_name.value|default:"test" }} • just now</small>
+                            <small class="text-white">u/{{ reddit_user.username |default:"default_user" }}</small>
+                        </div>
+                    </div>
+        
+                    <!-- Title -->
+                    <h5 class="fw-bold">{{ form.title.value|default:"last try" }}</h5>
+        
+                    <!-- Content -->
+                    <p class="mb-4">{{ form.body.value|default:"last" }}</p>
+        
+                    <!-- Action buttons (fake icons/text) -->
+                    <div class="d-flex gap-3">
+                        <span> <button class="btn rounded-pill text-white" style="background-color: #252525;"><i class="bi bi-arrow-up"></i>  1 <i class="bi bi-arrow-down"></i></button> </span>
+                        <span><button class="btn rounded-pill text-white" style="background-color: #252525;"><i class="bi bi-chat"></i></button></span>
+                        <span><button class="btn rounded-pill text-white" style="background-color: #252525;"><i class="bi bi-award"></i></button></span>
+                        <span><button class="btn rounded-pill text-white" style="background-color: #252525;"><i class="bi bi-share"></i> Share</button></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+            <!-- Optional: Add a background color or image here -->
+        </div>
+    </div>
+</div>
+{% endblock %}

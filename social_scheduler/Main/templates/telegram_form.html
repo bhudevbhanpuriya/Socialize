@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+{% load widget_tweaks %}
+{% load tz %}
+
+
+{% block title %}Telegram{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-5">
+    <div class="row">
+        <!-- Left column with form -->
+        <div class="col-md-6 col-lg-7 px-5">
+            <div class="card bg-dark text-white shadow-lg rounded-4 border-0">
+                <div class="card-header bg-primary text-dark rounded-top-4 text-center">
+                    <h3 class="mb-0">
+                        {% if form.instance.pk %} Edit Telegram Message {% else %} Create Telegram Message {% endif %}
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="mb-3">
+                                <label for="{{ field.id_for_label }}" class="form-label fw-semibold">{{ field.label }}</label>
+                                {{ field|add_class:"form-control bg-dark text-white border-secondary form-control-sm" }}
+                                {% if field.errors %}
+                                    <div class="text-danger small">{{ field.errors }}</div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        <div class="d-grid gap-2">
+                            <button type="submit" name="action" value="schedule" class="btn 
+                            bg-primary btn-lg">Schedule</button>
+        <button type="submit" name="action" value="preview" class="btn btn-outline-light btn-lg">Preview</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Optional Right Column -->
+        <div class="col-md-6 col-lg-5">
+            <div class="container-xl h-100 d-flex flex-column shadow-lg rounded-4 overflow-hidden" style="max-height: 600px;">
+                <!-- Header -->
+                <div class="bg-primary text-white p-3">
+                    <h5 class="mb-0">Telegram Bot</h5>
+                </div>
+        
+                <!-- Messages -->
+                <div class="flex-grow-1 p-3 bg-light overflow-auto" style="height: 400px;">
+                    <div class="d-flex justify-content-end mb-2">
+                        <div class="bg-warning p-2 px-3 rounded-3 shadow-sm text-dark">Hello! This is my bot 💬</div>
+                    </div>
+                    <div class="col-10 d-flex justify-content-start mb-2">
+                        {% if tele_entry %}
+                        <div class="bg-white text-dark p-2 px-3 rounded-3 shadow-sm position-relative">
+                            {{ tele_entry.content }}
+                            <div style="font-size: 0.75rem; color: grey; position: absolute; bottom: 4px; right: 8px;">
+                                
+                                {% now "H:i" %}
+
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="alert alert-warning">
+                            No Telegram data found for your account.
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    
+                </div>
+
+
+
+        
+
+
+        
+                <!-- Message Input -->
+                <div class="p-3 bg-white border-top d-flex">
+                    <input type="text" class="form-control me-2" placeholder="Type a message..." />
+                    <button class="btn btn-primary">Send</button>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}

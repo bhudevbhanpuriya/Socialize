@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="d-flex flex-md-row flex-column g-0" style="height: auto;">
+    <!-- Left: Text Box -->
+    <div class="col-md-6 bg-dark text-white px-5 py-5 d-flex align-items-center" data-aos="fade-right" style="flex: 1;">
+        <div>
+            <h1 class="display-6 fw-bold">
+                {% if user.is_authenticated %}
+                    Welcome, {{ user.username }}!
+                {% else %}
+                    Welcome to <span class="text-warning">Socialize</span>!
+                {% endif %}
+            </h1>
+            <p class="lead mt-3">
+                Manage all your social media accounts from one place. Schedule posts, automate content, and boost your online presence effortlessly.
+            </p>
+        </div>
+    </div>
+
+    <!-- Right: Image Box -->
+    <div class="col-md-6 position-relative" data-aos="fade-left" style="flex: 1;">
+        <img src="https://www.barrettandcoe.co.uk/bcwp/wp-content/uploads/2015/10/social-media-workshop-for-photographers1-1024x675.jpg"
+             alt="Dashboard"
+             class="w-100 h-100"
+             style="object-fit: cover; display: block;">
+
+        <!-- Black Overlay -->
+        <div class="position-absolute top-0 start-0 w-100 h-100" style="background-color: rgba(0,0,0,0.5); pointer-events: none;"></div>
+    </div>
+</div>
+
+
+<!-- Features Section -->
+<!-- Features Section -->
+<div class="container-fluid position-relative text-white py-5" style="background: none;">
+    <!-- Background Images and Overlay -->
+    <div class="position-absolute top-0 start-0 w-100 h-100" style="z-index: 0;">
+        <div class="d-flex h-100">
+            <div class="flex-fill" style="background: url('https://img.freepik.com/free-vector/modern-planning-schedule-template_23-2147939225.jpg?w=1380&t=st=1652214419~exp=1652215019~hmac=1f5fbcba6c37c1253c73f97c22449efa1a5e9f008e344b3da3482a4938b01e6e') center/cover no-repeat;"></div>
+            <div class="flex-fill" style="background: url('https://i.pinimg.com/originals/e3/ff/4e/e3ff4e01e00b92f7f7270b3c041918d4.jpg') center/cover no-repeat;"></div>
+            <div class="flex-fill" style="background: url('https://www.cflowapps.com/wp-content/uploads/2018/07/importance-of-workflow-automation-tools-600x300.png') center/cover no-repeat;"></div>
+        </div>
+        <!-- Black Overlay -->
+        <div class="position-absolute top-0 start-0 w-100 h-100" style="background-color: rgba(0, 0, 0, 0.6); z-index: 1;"></div>
+    </div>
+
+    <!-- Foreground Text -->
+    <div class="container position-relative" style="z-index: 2;">
+        <div class="row text-center">
+            <div class="col-md-4 mb-4" data-aos="fade-up">
+                <h4>Smart Scheduling</h4>
+                <p>Plan and post across platforms at your preferred time.</p>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <h4>Central Dashboard</h4>
+                <p>Manage Telegram, Reddit, and more from one interface.</p>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <h4>Automated Workflows</h4>
+                <p>Integrate with Celery for seamless background task execution.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
